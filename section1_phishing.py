@@ -19,7 +19,7 @@ Evaluation: Accuracy, Precision, Recall, F1-score, ROC curve/AUC,
 Usage   : python section1_phishing.py
 Outputs : outputs/section1/  (figures + metrics CSV)
 
-Author  : <student name>
+Author  : CB018287
 """
 
 # --------------------------------------------------------------------------
