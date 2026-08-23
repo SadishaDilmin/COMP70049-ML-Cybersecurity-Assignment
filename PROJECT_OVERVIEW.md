@@ -28,8 +28,8 @@ This lets the report discuss *when a simpler model is good enough* versus *when 
 - *Deep learning:* Turn words into embeddings (dense numeric representations) + an LSTM network that reads the email sequentially, like a human reading word by word.
 
 **What happened when we ran it:**
-- TF-IDF + Logistic Regression: **99.0% accuracy**
-- Embedding + LSTM: **98.4% accuracy**
+- TF-IDF + Logistic Regression: **99.1% accuracy**
+- Embedding + LSTM: **98.7% accuracy**
 
 **Takeaway:** Both models do very well here — spam detection from text is a problem simpler models already solve nearly perfectly, so the LSTM's extra complexity doesn't buy much.
 
@@ -46,8 +46,8 @@ This lets the report discuss *when a simpler model is good enough* versus *when 
 - *Deep learning:* 1-D Convolutional Neural Network (CNN) — treats the connection's features like a short signal and scans it for patterns.
 
 **What happened when we ran it:**
-- Random Forest: **76.0% accuracy**
-- 1-D CNN: **74.8% accuracy**
+- Random Forest: **75.6% accuracy**
+- 1-D CNN: **75.2% accuracy**
 - Both models do well on Normal/DoS traffic but struggle badly on rare attack types (R2L, U2R) — this is expected and well-documented behaviour for this benchmark, not a bug.
 
 **Takeaway:** The ~75-80% accuracy ceiling here is a known property of the dataset (rare, unseen attack types make it deliberately hard), not a modelling failure.
@@ -68,7 +68,7 @@ This lets the report discuss *when a simpler model is good enough* versus *when 
 
 **What happened when we ran it:**
 - Isolation Forest: 67.4% accuracy, caught ~50% of real attacks (TPR)
-- Autoencoder: **82.1% accuracy**, caught **75% of real attacks (TPR)**, with a stronger ROC-AUC (0.90 vs 0.82)
+- Autoencoder: **82.0% accuracy**, caught **73% of real attacks (TPR)**, with a stronger ROC-AUC (0.91 vs 0.82)
 
 **Takeaway:** The Autoencoder clearly outperforms Isolation Forest here — deep learning earns its keep on this harder, fully unsupervised problem.
 
@@ -85,7 +85,7 @@ This lets the report discuss *when a simpler model is good enough* versus *when 
 - *Deep learning:* LSTM, looking at a **sliding window of 10 consecutive events** — i.e., judging behaviour as a short sequence over time, not just one event in isolation.
 
 **What happened when we ran it:**
-- Gradient Boosting (per event): 95.9% accuracy
+- Gradient Boosting (per event): 95.8% accuracy
 - LSTM (event windows): **99.9% accuracy**, near-perfect precision/recall on ransomware
 
 **Takeaway:** Looking at *sequences* of behaviour rather than single events makes a big difference — ransomware has a distinctive pattern over time (e.g., rapid file changes) that's much clearer in a window than in any single event.
