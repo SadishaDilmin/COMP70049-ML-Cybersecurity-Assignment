@@ -1,0 +1,69 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1786793828.815225   12236 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1786793828.871202   12236 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1786793831.275380   12236 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+======================================================================
+Section 1 - Phishing/Spam Email Detection
+======================================================================
+Loaded 33,665 emails (17,120 spam / 16,545 ham)
+Stratified subsample: 16,000 emails (balanced)
+Cleaning text (stopword removal + lemmatization)...
+Train: 12,800  Test: 3,200
+
+[1/2] TF-IDF + Logistic Regression
+              precision    recall  f1-score   support
+
+         ham       1.00      0.98      0.99      1600
+        spam       0.98      1.00      0.99      1600
+
+    accuracy                           0.99      3200
+   macro avg       0.99      0.99      0.99      3200
+weighted avg       0.99      0.99      0.99      3200
+
+[2/2] Word-embedding + LSTM
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ embedding (Embedding)           │ (None, 200, 64)        │     1,280,000 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ lstm (LSTM)                     │ (None, 64)             │        33,024 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout (Dropout)               │ (None, 64)             │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense (Dense)                   │ (None, 32)             │         2,080 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 1)              │            33 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 1,315,137 (5.02 MB)
+ Trainable params: 1,315,137 (5.02 MB)
+ Non-trainable params: 0 (0.00 B)
+Epoch 1/6
+E0000 00:00:1786793862.024950   12236 util.cc:131] oneDNN supports DT_BOOL only on platforms with AVX-512. Falling back to the default Eigen-based implementation if present.
+180/180 - 30s - 165ms/step - accuracy: 0.9464 - loss: 0.1790 - val_accuracy: 0.9805 - val_loss: 0.0601
+Epoch 2/6
+180/180 - 39s - 219ms/step - accuracy: 0.9900 - loss: 0.0401 - val_accuracy: 0.9859 - val_loss: 0.0457
+Epoch 3/6
+180/180 - 39s - 219ms/step - accuracy: 0.9943 - loss: 0.0262 - val_accuracy: 0.9883 - val_loss: 0.0370
+Epoch 4/6
+180/180 - 25s - 136ms/step - accuracy: 0.9964 - loss: 0.0171 - val_accuracy: 0.9820 - val_loss: 0.0688
+Epoch 5/6
+180/180 - 34s - 189ms/step - accuracy: 0.9978 - loss: 0.0090 - val_accuracy: 0.9805 - val_loss: 0.0679
+              precision    recall  f1-score   support
+
+         ham       0.99      0.98      0.99      1600
+        spam       0.98      0.99      0.99      1600
+
+    accuracy                           0.99      3200
+   macro avg       0.99      0.99      0.99      3200
+weighted avg       0.99      0.99      0.99      3200
+
+
+Model comparison:
+                        Model  Accuracy  Precision  Recall  F1-score  ROC-AUC
+TF-IDF + Logistic Regression    0.9906     0.9834  0.9981    0.9907   0.9994
+            Embedding + LSTM    0.9866     0.9832  0.9900    0.9866   0.9973
+
+All figures and metrics written to outputs/section1/

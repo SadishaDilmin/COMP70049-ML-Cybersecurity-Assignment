@@ -1,0 +1,72 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1786794424.816658   17651 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1786794424.903001   17651 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1786794427.057667   17651 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+======================================================================
+Section 4 - Ransomware Detection (Sysmon behavioural events)
+======================================================================
+Removed 316,391 duplicate events
+Events: 36,485  (5,880 ransomware / 30,605 goodware)
+Features (19): ['File_Delete_archived', 'File_created', 'File_creation_time_changed', 'Pipe_Created', 'Process_Create', 'Registry_value_set', 'process-related', 'network-related', 'file-related', 'suspicious_path', 'system_executable', 'path_length', 'directory_depth', 'process_name_length', 'process_vs_parent_freq_ratio', 'executable_depth_diff', 'parent_is_system_executable', 'extension_similarity', 'file_name_entropy']
+
+[1/2] Histogram Gradient Boosting Classifier (per-event)
+              precision    recall  f1-score   support
+
+    goodware     0.9881    0.9616    0.9747      6121
+  ransomware     0.8246    0.9396    0.8784      1176
+
+    accuracy                         0.9581      7297
+   macro avg     0.9064    0.9506    0.9265      7297
+weighted avg     0.9617    0.9581    0.9591      7297
+
+[2/2] LSTM over windows of consecutive events (window=10, stride=5)
+Windows built: 7,295 (1,175 ransomware / 6,120 goodware)
+Sequence train: 5,836  test: 1,459
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ lstm (LSTM)                     │ (None, 10, 64)         │        21,504 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ lstm_1 (LSTM)                   │ (None, 32)             │        12,416 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout (Dropout)               │ (None, 32)             │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense (Dense)                   │ (None, 32)             │         1,056 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 1)              │            33 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 35,009 (136.75 KB)
+ Trainable params: 35,009 (136.75 KB)
+ Non-trainable params: 0 (0.00 B)
+Epoch 1/6
+42/42 - 4s - 103ms/step - accuracy: 0.9560 - loss: 0.2838 - val_accuracy: 1.0000 - val_loss: 0.0911
+Epoch 2/6
+42/42 - 2s - 50ms/step - accuracy: 0.9998 - loss: 0.0052 - val_accuracy: 1.0000 - val_loss: 0.0122
+Epoch 3/6
+42/42 - 1s - 18ms/step - accuracy: 1.0000 - loss: 0.0016 - val_accuracy: 0.9983 - val_loss: 0.0056
+Epoch 4/6
+42/42 - 1s - 34ms/step - accuracy: 1.0000 - loss: 9.0776e-04 - val_accuracy: 0.9983 - val_loss: 0.0046
+Epoch 5/6
+42/42 - 1s - 20ms/step - accuracy: 1.0000 - loss: 6.2696e-04 - val_accuracy: 0.9983 - val_loss: 0.0048
+Epoch 6/6
+42/42 - 1s - 30ms/step - accuracy: 1.0000 - loss: 4.4029e-04 - val_accuracy: 0.9983 - val_loss: 0.0054
+              precision    recall  f1-score   support
+
+    goodware     1.0000    0.9992    0.9996      1224
+  ransomware     0.9958    1.0000    0.9979       235
+
+    accuracy                         0.9993      1459
+   macro avg     0.9979    0.9996    0.9987      1459
+weighted avg     0.9993    0.9993    0.9993      1459
+
+
+Model comparison:
+                         Model  Accuracy  Precision  Recall  F1-score  ROC-AUC  PR-AUC
+Gradient Boosting (per event)    0.9581     0.8246  0.9396    0.8784   0.9922  0.9574
+         LSTM (event windows)    0.9993     0.9958  1.0000    0.9979   1.0000  1.0000
+Computing permutation feature importance (subsample)...
+
+All figures and metrics written to outputs/section4/
