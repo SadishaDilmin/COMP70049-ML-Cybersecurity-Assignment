@@ -1,6 +1,44 @@
 # COMP70049 — Machine Learning in Cyber: Assignment Submission
 
-This single README covers **all four sections** of the assignment.
+**Student ID:** CB018287
+**Repository:** https://github.com/SadishaDilmin/COMP70049-ML-Cybersecurity-Assignment
+
+This single README covers **all four sections** of the assignment: how to set
+the project up, how to run each section, and what each run produces.
+
+---
+
+## 0. Quick Start (for the marker)
+
+Everything needed to reproduce the results — code, datasets and the written
+report — is committed to this repository. There is nothing to download
+separately.
+
+```bash
+# 1. Clone the repository (≈190 MB on disk — the datasets are included)
+git clone https://github.com/SadishaDilmin/COMP70049-ML-Cybersecurity-Assignment.git
+cd COMP70049-ML-Cybersecurity-Assignment
+
+# 2. Create and activate a virtual environment (Python 3.10–3.12)
+python3 -m venv venv
+source venv/bin/activate            # Windows: venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run any section from the project root
+python section1_phishing.py
+```
+
+Total runtime for all four sections is roughly **20 minutes on CPU** — no GPU
+is required. Each script prints its results to the console and writes figures
+and metrics into `outputs/sectionN/`.
+
+> **Just want to see the results without running anything?**
+> The `outputs/` folders in this repository already contain every figure,
+> metrics CSV and console log (`run_log.txt`) from the exact runs reported in
+> `Report.docx`. `PROJECT_OVERVIEW.md` gives a plain-language walkthrough of
+> what each section does and what it found.
 
 ---
 
@@ -20,13 +58,14 @@ Each section is implemented in its own standalone Python file, as required.
 ## 2. Folder Structure
 
 ```
-COMP70049_Assignment/
+COMP70049-ML-Cybersecurity-Assignment/
 ├── section1_phishing.py            # Section 1: TF-IDF + LogReg vs Embedding + LSTM
 ├── section2_intrusion.py           # Section 2: Random Forest vs 1-D CNN (5-class)
 ├── section3_anomaly.py             # Section 3: Isolation Forest vs Autoencoder
 ├── section4_ransomware.py          # Section 4: Gradient Boosting vs LSTM (windows)
 ├── requirements.txt                # Python dependencies
-├── README.md                       # This file
+├── README.md                       # This file — setup and run instructions
+├── PROJECT_OVERVIEW.md             # Plain-language summary of all four sections
 ├── Report.docx                     # Written report (≤3000 words)
 ├── datasets/
 │   ├── section1_email/enron_spam_data.csv          # Enron Spam Dataset (33,716 emails)
@@ -43,18 +82,23 @@ COMP70049_Assignment/
 ```
 
 The exact dataset files used by the implementation are included in
-`datasets/` (all are public datasets; official sources below).
+`datasets/` (all are public datasets; official sources in section 8 below).
 
 ---
 
 ## 3. System Requirements
 
-- **Python:** 3.10 – 3.12 (developed and tested on Python 3.11)
-- **OS:** Windows, macOS or Linux
+- **Python:** 3.10 – 3.12 (developed and tested on Python 3.11).
+  Python 3.13 is **not** recommended — TensorFlow support lags behind.
+- **OS:** Windows, macOS or Linux.
 - **Hardware:** no GPU required — every model trains on CPU.
   Approximate CPU runtimes: Section 1 ≈ 6 min, Section 2 ≈ 6 min,
   Section 3 ≈ 3 min, Section 4 ≈ 5 min.
 - **RAM:** 8 GB recommended.
+- **Disk:** ≈190 MB for the cloned repository, plus ≈600 MB for the virtual
+  environment (TensorFlow is a large dependency).
+- **Internet:** needed once, for `pip install` and for Section 1's small NLTK
+  downloads. The scripts run offline afterwards.
 - The scripts also run unchanged in **Google Colab** (upload the project
   folder, `pip install -r requirements.txt`, then run each script).
 
@@ -75,11 +119,17 @@ cached afterwards.
 
 ```bash
 # (optional but recommended) create a virtual environment
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate            # Windows: venv\Scripts\activate
 
 # install all dependencies
 pip install -r requirements.txt
+```
+
+To confirm the install worked before running a full section:
+
+```bash
+python -c "import numpy, pandas, sklearn, matplotlib, seaborn, nltk, tensorflow; print('All dependencies OK')"
 ```
 
 ---
@@ -95,6 +145,10 @@ python section2_intrusion.py    # Section 2 — intrusion classification
 python section3_anomaly.py      # Section 3 — anomaly detection
 python section4_ransomware.py   # Section 4 — ransomware detection
 ```
+
+The four sections are completely independent and can be run in any order, or
+individually. Re-running a section overwrites that section's files in
+`outputs/sectionN/`.
 
 Each script is fully self-contained: it loads its dataset from
 `datasets/`, performs preprocessing, trains the classic ML model and the
@@ -119,7 +173,16 @@ comparison table to the console, and writes to `outputs/sectionN/`:
 
 The committed `outputs/` folders already contain the artefacts from the
 runs reported in `Report.docx`, including each run's console log
-(`run_log.txt`).
+(`run_log.txt`). These can be compared directly against a fresh run.
+
+Headline results from those runs (full discussion in `Report.docx`):
+
+| Section | Classic ML model | Deep learning model |
+|---|---|---|
+| 1 — Phishing | TF-IDF + Logistic Regression — 99.1% | Embedding + LSTM — 98.7% |
+| 2 — Intrusion | Random Forest — 75.6% | 1-D CNN — 75.2% |
+| 3 — Anomaly | Isolation Forest — 67.4% | Autoencoder — 82.0% |
+| 4 — Ransomware | Gradient Boosting — 95.8% | LSTM (windows) — 99.9% |
 
 ---
 
@@ -131,6 +194,9 @@ runs reported in `Report.docx`, including each run's console log
 | 2 | NSL-KDD | https://www.unb.ca/cic/datasets/nsl.html | Mirror: https://github.com/defcom17/NSL_KDD |
 | 3 | UNSW-NB15 (train/test partitions) | https://research.unsw.edu.au/projects/unsw-nb15-dataset | Mirror: https://github.com/InitRoot/UNSW_NB15 |
 | 4 | CSU Ransomware Behavioural Dataset (Sysmon events) | https://github.com/CSCRC-SCREED/CSU-Ransomware-Data | same |
+
+All four are public, non-sensitive research datasets — no real client,
+personal or proprietary data is used anywhere in this project.
 
 **Modifications before implementation:** none — the files in `datasets/`
 are exactly as downloaded (Section 3's mirror ships the categorical
@@ -166,7 +232,20 @@ scripts at runtime, as documented in the report.
 
 ---
 
-## 10. Contact Information
+## 10. Troubleshooting
+
+| Symptom | Cause and fix |
+|---|---|
+| `FileNotFoundError: datasets/...` | The script was not run from the project root. `cd` into the folder containing this README, then run `python section1_phishing.py`. |
+| `pip install` fails on `tensorflow` | Python version is too new (3.13+) or too old. Use Python 3.10–3.12. Check with `python3 --version`. |
+| `nltk` download errors on Section 1 | No internet on first run. Connect once and re-run — the resources are cached afterwards and later runs work offline. |
+| TensorFlow prints `oneDNN` / CUDA / retracing warnings | Harmless informational messages on CPU. Training proceeds normally. |
+| Deep-learning numbers differ slightly from the report | Expected. Neural network training is not bit-identical across platforms even with a fixed seed; classic ML results reproduce exactly. |
+| `python` not found (macOS/Linux) | Use `python3` instead, or activate the virtual environment first. |
+
+---
+
+## 11. Contact Information
 
 Student ID: CB018287
 Student email: CB018287@students.apiit.lk
