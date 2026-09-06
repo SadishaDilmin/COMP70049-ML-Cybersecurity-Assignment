@@ -35,10 +35,11 @@ is required. Each script prints its results to the console and writes figures
 and metrics into `outputs/sectionN/`.
 
 > **Just want to see the results without running anything?**
-> The `outputs/` folders in this repository already contain every figure,
-> metrics CSV and console log (`run_log.txt`) from the exact runs reported in
-> `Report.docx`. `PROJECT_OVERVIEW.md` gives a plain-language walkthrough of
-> what each section does and what it found.
+> The `outputs/` folders already contain every figure, metrics CSV and console
+> log (`run_log.txt`) from the run reported in `Report.docx` — the report's
+> tables and figures are taken directly from these files.
+> `PROJECT_OVERVIEW.md` gives a plain-language walkthrough of what each section
+> does and what it found.
 
 ---
 
@@ -154,8 +155,10 @@ Each script is fully self-contained: it loads its dataset from
 `datasets/`, performs preprocessing, trains the classic ML model and the
 deep learning model, evaluates both, prints a comparison table, and
 saves all figures/metrics into its `outputs/sectionN/` folder.
-A fixed random seed (42) is set everywhere for reproducibility
-(deep-learning numbers may still vary marginally between platforms).
+A fixed random seed (42) is set everywhere. On the same library versions the
+classic ML models (Logistic Regression, Random Forest, Isolation Forest,
+Gradient Boosting) reproduce their reported numbers exactly; the neural
+networks vary slightly from run to run even when seeded. See section 9.
 
 ---
 
@@ -171,39 +174,70 @@ comparison table to the console, and writes to `outputs/sectionN/`:
 | 3 | `section3_metrics.csv`, `s3_confusion_matrices.png`, `s3_roc_pr_curves.png`, `s3_reconstruction_error.png`, `s3_ae_training.png` |
 | 4 | `section4_metrics.csv`, `s4_confusion_matrices.png`, `s4_roc_pr_curves.png`, `s4_lstm_training.png`, `s4_feature_importance.png` |
 
-The committed `outputs/` folders already contain the artefacts from the
-runs reported in `Report.docx`, including each run's console log
-(`run_log.txt`). These can be compared directly against a fresh run.
+**The report and these files are from the same run.** Every results table in
+`Report.docx` matches the corresponding `sectionN_metrics.csv`, and all sixteen
+figures in the report are byte-identical to the `.png` files here. Each
+section's `run_log.txt` is the full console output of that run.
 
-Headline results from those runs (full discussion in `Report.docx`):
+Headline accuracy as reported in `Report.docx` (full discussion in the report):
 
 | Section | Classic ML model | Deep learning model |
 |---|---|---|
-| 1 — Phishing | TF-IDF + Logistic Regression — 99.1% | Embedding + LSTM — 98.7% |
-| 2 — Intrusion | Random Forest — 75.6% | 1-D CNN — 75.2% |
-| 3 — Anomaly | Isolation Forest — 67.4% | Autoencoder — 82.0% |
-| 4 — Ransomware | Gradient Boosting — 95.8% | LSTM (windows) — 99.9% |
+| 1 — Phishing | TF-IDF + Logistic Regression — 99.0% | Embedding + LSTM — 98.5% |
+| 2 — Intrusion | Random Forest — 76.0% | 1-D CNN — 75.4% |
+| 3 — Anomaly | Isolation Forest — 67.4% | Autoencoder — 81.5% |
+| 4 — Ransomware | Gradient Boosting — 95.9% | LSTM (windows) — 99.9% |
 
 ---
 
 ## 8. Datasets: Sources and Modifications
 
-| Section | Dataset | Official source | Download used |
-|---|---|---|---|
-| 1 | Enron Spam Dataset | https://www2.aueb.gr/users/ion/data/enron-spam/ | CSV compilation: https://github.com/MWiechmann/enron_spam_data |
-| 2 | NSL-KDD | https://www.unb.ca/cic/datasets/nsl.html | Mirror: https://github.com/defcom17/NSL_KDD |
-| 3 | UNSW-NB15 (train/test partitions) | https://research.unsw.edu.au/projects/unsw-nb15-dataset | Mirror: https://github.com/InitRoot/UNSW_NB15 |
-| 4 | CSU Ransomware Behavioural Dataset (Sysmon events) | https://github.com/CSCRC-SCREED/CSU-Ransomware-Data | same |
-
 All four are public, non-sensitive research datasets — no real client,
-personal or proprietary data is used anywhere in this project.
+personal or proprietary data is used anywhere in this project. **Every link
+below was checked and resolves at the time of submission**, and each row names
+the exact file to download, so the dataset used here can be obtained and
+compared directly.
 
-**Modifications before implementation:** none — the files in `datasets/`
-are exactly as downloaded (Section 3's mirror ships the categorical
-columns already integer-coded as `xProt`/`xServ`/`xState`, and its two
-CSVs are name-swapped relative to the official splits; the script
-detects and corrects the swap by row count at load time). All cleaning,
-encoding, scaling and feature engineering is performed inside the
+| Section | Dataset | Official project page | Exact download used |
+|---|---|---|---|
+| 1 | Enron Spam Dataset | [aueb.gr — Enron-Spam](https://www2.aueb.gr/users/ion/data/enron-spam/) | CSV compilation: [MWiechmann/enron_spam_data](https://github.com/MWiechmann/enron_spam_data) → `enron_spam_data.zip`, unzipped to `enron_spam_data.csv` |
+| 2 | NSL-KDD | [UNB CIC — NSL-KDD](https://www.unb.ca/cic/datasets/nsl.html) | Mirror: [Jehuty4949/NSL_KDD](https://github.com/Jehuty4949/NSL_KDD) → `KDDTrain+.txt` and `KDDTest+.txt` (repo root) |
+| 3 | UNSW-NB15 (train/test partitions) | [UNSW — UNSW-NB15](https://research.unsw.edu.au/projects/unsw-nb15-dataset) | Mirror: [InitRoot/UNSW_NB15](https://github.com/InitRoot/UNSW_NB15) → `UNSW_NB15.zip`, which contains both partition CSVs |
+| 4 | CSU Ransomware Behavioural Dataset (Sysmon events) | [CSCRC-SCREED/CSU-Ransomware-Data](https://github.com/CSCRC-SCREED/CSU-Ransomware-Data) | Same repository → `dataset/Ransomware_Data.csv` |
+
+> **Note on the Section 2 link:** the NSL-KDD mirror was originally cloned from
+> `github.com/defcom17/NSL_KDD`. That account has since been renamed, and the
+> old URL now redirects to `Jehuty4949/NSL_KDD` — the same repository, with the
+> same `KDDTrain+.txt` / `KDDTest+.txt` files. The current URL is given above.
+
+**What each committed file contains** (counts are as parsed by pandas, not raw
+line counts — the Enron message bodies contain embedded newlines):
+
+| File in `datasets/` | Records |
+|---|---|
+| `section1_email/enron_spam_data.csv` | 33,716 emails (17,171 spam / 16,545 ham) |
+| `section3_unsw/UNSW_NB15_training-set.csv` | 82,332 flows |
+| `section3_unsw/UNSW_NB15_testing-set.csv` | 175,341 flows |
+
+**Modifications before implementation: none.** The files in `datasets/` are
+exactly as downloaded. This is verifiable — the two Section 3 CSVs committed
+here are byte-identical (matching MD5 checksums) to those inside the mirror's
+`UNSW_NB15.zip`.
+
+Two quirks of the Section 3 mirror are worth flagging, since both are handled
+in code rather than by editing the data:
+
+1. Its categorical columns arrive already integer-coded, named `xProt`,
+   `xServ` and `xState` (visible in the CSV header) rather than the official
+   `proto` / `service` / `state`.
+2. Its two CSVs are **name-swapped** relative to the official splits — the file
+   named `testing-set.csv` holds 175,341 rows (the official *training*
+   partition) and `training-set.csv` holds 82,332 (the official *test*
+   partition). `section3_anomaly.py` detects this by row count at load time and
+   corrects it automatically, printing a `NOTE: swapped train/test files
+   detected by size - correcting.` line when it does.
+
+All cleaning, encoding, scaling and feature engineering is performed inside the
 scripts at runtime, as documented in the report.
 
 ---
@@ -240,7 +274,8 @@ scripts at runtime, as documented in the report.
 | `pip install` fails on `tensorflow` | Python version is too new (3.13+) or too old. Use Python 3.10–3.12. Check with `python3 --version`. |
 | `nltk` download errors on Section 1 | No internet on first run. Connect once and re-run — the resources are cached afterwards and later runs work offline. |
 | TensorFlow prints `oneDNN` / CUDA / retracing warnings | Harmless informational messages on CPU. Training proceeds normally. |
-| Deep-learning numbers differ slightly from the report | Expected. Neural network training is not bit-identical across platforms even with a fixed seed; classic ML results reproduce exactly. |
+| Deep-learning numbers differ slightly from the report | Expected — seeded neural network training is still not bit-identical between runs or platforms. The classic ML models are the stable comparison point. |
+| Classic ML numbers differ slightly too | Possible if your library versions differ from those in `requirements.txt`. Deduplication and one-hot ordering can shift marginally between pandas/scikit-learn releases, which moves the downstream scores a little. Install from `requirements.txt` into a clean virtual environment for the closest match. |
 | `python` not found (macOS/Linux) | Use `python3` instead, or activate the virtual environment first. |
 
 ---

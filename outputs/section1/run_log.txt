@@ -1,9 +1,3 @@
-WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-I0000 00:00:1786793828.815225   12236 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-I0000 00:00:1786793828.871202   12236 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-I0000 00:00:1786793831.275380   12236 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
 ======================================================================
 Section 1 - Phishing/Spam Email Detection
 ======================================================================
@@ -41,16 +35,13 @@ Model: "sequential"
  Trainable params: 1,315,137 (5.02 MB)
  Non-trainable params: 0 (0.00 B)
 Epoch 1/6
-E0000 00:00:1786793862.024950   12236 util.cc:131] oneDNN supports DT_BOOL only on platforms with AVX-512. Falling back to the default Eigen-based implementation if present.
-180/180 - 30s - 165ms/step - accuracy: 0.9464 - loss: 0.1790 - val_accuracy: 0.9805 - val_loss: 0.0601
+180/180 - 6s - 35ms/step - accuracy: 0.9394 - loss: 0.1917 - val_accuracy: 0.9859 - val_loss: 0.0622
 Epoch 2/6
-180/180 - 39s - 219ms/step - accuracy: 0.9900 - loss: 0.0401 - val_accuracy: 0.9859 - val_loss: 0.0457
+180/180 - 6s - 31ms/step - accuracy: 0.9887 - loss: 0.0452 - val_accuracy: 0.9867 - val_loss: 0.0458
 Epoch 3/6
-180/180 - 39s - 219ms/step - accuracy: 0.9943 - loss: 0.0262 - val_accuracy: 0.9883 - val_loss: 0.0370
+180/180 - 5s - 30ms/step - accuracy: 0.9966 - loss: 0.0181 - val_accuracy: 0.9633 - val_loss: 0.1027
 Epoch 4/6
-180/180 - 25s - 136ms/step - accuracy: 0.9964 - loss: 0.0171 - val_accuracy: 0.9820 - val_loss: 0.0688
-Epoch 5/6
-180/180 - 34s - 189ms/step - accuracy: 0.9978 - loss: 0.0090 - val_accuracy: 0.9805 - val_loss: 0.0679
+180/180 - 5s - 30ms/step - accuracy: 0.9939 - loss: 0.0226 - val_accuracy: 0.9820 - val_loss: 0.0685
               precision    recall  f1-score   support
 
          ham       0.99      0.98      0.99      1600
@@ -63,7 +54,7 @@ weighted avg       0.99      0.99      0.99      3200
 
 Model comparison:
                         Model  Accuracy  Precision  Recall  F1-score  ROC-AUC
-TF-IDF + Logistic Regression    0.9906     0.9834  0.9981    0.9907   0.9994
-            Embedding + LSTM    0.9866     0.9832  0.9900    0.9866   0.9973
+TF-IDF + Logistic Regression    0.9900     0.9822  0.9981    0.9901   0.9994
+            Embedding + LSTM    0.9853     0.9838  0.9869    0.9853   0.9974
 
 All figures and metrics written to outputs/section1/

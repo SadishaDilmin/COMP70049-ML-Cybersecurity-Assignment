@@ -1,9 +1,3 @@
-WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-I0000 00:00:1786793597.092562   10234 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-I0000 00:00:1786793597.259942   10234 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-I0000 00:00:1786793599.812484   10234 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
 ======================================================================
 Section 2 - Network Intrusion Classification (NSL-KDD)
 ======================================================================
@@ -22,15 +16,15 @@ PCA: 89 components explain 95% of the variance
 [1/2] Random Forest (full one-hot feature space)
               precision    recall  f1-score   support
 
-         DoS     0.9630    0.8019    0.8751      7460
-      Normal     0.6518    0.9737    0.7809      9711
-       Probe     0.8658    0.6047    0.7121      2421
-         R2L     0.9843    0.0433    0.0830      2885
-         U2R     0.6667    0.0597    0.1096        67
+         DoS     0.9636    0.8166    0.8841      7460
+      Normal     0.6563    0.9737    0.7841      9711
+       Probe     0.8656    0.6010    0.7094      2421
+         R2L     0.9840    0.0426    0.0817      2885
+         U2R     0.5714    0.0597    0.1081        67
 
-    accuracy                         0.7555     22544
-   macro avg     0.8263    0.4967    0.5121     22544
-weighted avg     0.8203    0.7555    0.7134     22544
+    accuracy                         0.7598     22544
+   macro avg     0.8082    0.4987    0.5135     22544
+weighted avg     0.8221    0.7598    0.7173     22544
 
 [2/2] 1-D Convolutional Neural Network
 Model: "sequential"
@@ -63,37 +57,37 @@ Model: "sequential"
  Trainable params: 484,869 (1.85 MB)
  Non-trainable params: 384 (1.50 KB)
 Epoch 1/8
-443/443 - 47s - 106ms/step - accuracy: 0.9784 - loss: 0.0939 - val_accuracy: 0.9861 - val_loss: 0.0545
+443/443 - 9s - 20ms/step - accuracy: 0.9792 - loss: 0.0864 - val_accuracy: 0.9893 - val_loss: 0.0389
 Epoch 2/8
-443/443 - 33s - 75ms/step - accuracy: 0.9891 - loss: 0.0382 - val_accuracy: 0.9930 - val_loss: 0.0257
+443/443 - 8s - 17ms/step - accuracy: 0.9890 - loss: 0.0378 - val_accuracy: 0.9929 - val_loss: 0.0266
 Epoch 3/8
-443/443 - 57s - 128ms/step - accuracy: 0.9908 - loss: 0.0288 - val_accuracy: 0.9940 - val_loss: 0.0238
+443/443 - 9s - 20ms/step - accuracy: 0.9913 - loss: 0.0296 - val_accuracy: 0.9934 - val_loss: 0.0219
 Epoch 4/8
-443/443 - 26s - 59ms/step - accuracy: 0.9917 - loss: 0.0257 - val_accuracy: 0.9952 - val_loss: 0.0205
+443/443 - 9s - 21ms/step - accuracy: 0.9916 - loss: 0.0249 - val_accuracy: 0.9945 - val_loss: 0.0188
 Epoch 5/8
-443/443 - 24s - 54ms/step - accuracy: 0.9927 - loss: 0.0227 - val_accuracy: 0.9953 - val_loss: 0.0175
+443/443 - 9s - 20ms/step - accuracy: 0.9927 - loss: 0.0224 - val_accuracy: 0.9950 - val_loss: 0.0198
 Epoch 6/8
-443/443 - 58s - 130ms/step - accuracy: 0.9927 - loss: 0.0237 - val_accuracy: 0.9953 - val_loss: 0.0182
+443/443 - 9s - 20ms/step - accuracy: 0.9928 - loss: 0.0234 - val_accuracy: 0.9948 - val_loss: 0.0177
 Epoch 7/8
-443/443 - 41s - 92ms/step - accuracy: 0.9934 - loss: 0.0207 - val_accuracy: 0.9953 - val_loss: 0.0166
+443/443 - 8s - 19ms/step - accuracy: 0.9935 - loss: 0.0201 - val_accuracy: 0.9954 - val_loss: 0.0161
 Epoch 8/8
-443/443 - 37s - 83ms/step - accuracy: 0.9937 - loss: 0.0196 - val_accuracy: 0.9955 - val_loss: 0.0135
+443/443 - 8s - 18ms/step - accuracy: 0.9938 - loss: 0.0198 - val_accuracy: 0.9958 - val_loss: 0.0153
               precision    recall  f1-score   support
 
-         DoS     0.9101    0.7940    0.8481      7460
-      Normal     0.6601    0.9279    0.7715      9711
-       Probe     0.8121    0.6588    0.7275      2421
-         R2L     0.9927    0.1414    0.2476      2885
-         U2R     0.7273    0.1194    0.2051        67
+         DoS     0.9369    0.7938    0.8594      7460
+      Normal     0.6709    0.9270    0.7784      9711
+       Probe     0.6996    0.6840    0.6917      2421
+         R2L     0.9838    0.1470    0.2557      2885
+         U2R     0.7143    0.0746    0.1351        67
 
-    accuracy                         0.7516     22544
-   macro avg     0.8205    0.5283    0.5599     22544
-weighted avg     0.8019    0.7516    0.7234     22544
+    accuracy                         0.7545     22544
+   macro avg     0.8011    0.5253    0.5441     22544
+weighted avg     0.8022    0.7545    0.7271     22544
 
 
 Model comparison:
          Model  Accuracy  Macro Precision  Macro Recall  Macro F1  Weighted F1
-Random Forest    0.7555           0.8263        0.4967    0.5121       0.7134
-      1-D CNN    0.7516           0.8205        0.5283    0.5599       0.7234
+Random Forest    0.7598           0.8082        0.4987    0.5135       0.7173
+      1-D CNN    0.7545           0.8011        0.5253    0.5441       0.7271
 
 All figures and metrics written to outputs/section2/
